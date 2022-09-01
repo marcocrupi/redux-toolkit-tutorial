@@ -155,4 +155,159 @@ nav svg {
   color: var(--clr-white);
 }
 ```
+### Setup Cart
 
+- cartSlice.js
+
+```js
+import cartItems from '../../cartItems';
+
+const initialState = {
+  cartItems: cartItems,
+  amount: 0,
+  total: 0,
+  isLoading: true,
+};
+```
+
+- create CartContainer.js and CartItem.js
+- CartContainer.js
+
+```js
+import React from 'react';
+import CartItem from './CartItem';
+import { useSelector } from 'react-redux';
+
+const CartContainer = () => {
+  const { cartItems, total, amount } = useSelector((state) => state.cart);
+
+  if (amount < 1) {
+    return (
+      <section className='cart'>
+        {/* cart header */}
+        <header>
+          <h2>your bag</h2>
+          <h4 className='empty-cart'>is currently empty</h4>
+        </header>
+      </section>
+    );
+  }
+  return (
+    <section className='cart'>
+      {/* cart header */}
+      <header>
+        <h2>your bag</h2>
+      </header>
+      {/* cart items */}
+      <div>
+        {cartItems.map((item) => {
+          return <CartItem key={item.id} {...item} />;
+        })}
+      </div>
+      {/* cart footer */}
+      <footer>
+        <hr />
+        <div className='cart-total'>
+          <h4>
+            total <span>${total}</span>
+          </h4>
+        </div>
+        <button className='btn clear-btn'>clear cart</button>
+      </footer>
+    </section>
+  );
+};
+
+export default CartContainer;
+```
+
+- CartItems.js
+
+```js
+import React from 'react';
+import { ChevronDown, ChevronUp } from '../icons';
+
+const CartItem = ({ id, img, title, price, amount }) => {
+  return (
+    <article className='cart-item'>
+      <img src={img} alt={title} />
+      <div>
+        <h4>{title}</h4>
+        <h4 className='item-price'>${price}</h4>
+        {/* remove button */}
+        <button className='remove-btn'>remove</button>
+      </div>
+      <div>
+        {/* increase amount */}
+        <button className='amount-btn'>
+          <ChevronUp />
+        </button>
+        {/* amount */}
+        <p className='amount'>{amount}</p>
+        {/* decrease amount */}
+        <button className='amount-btn'>
+          <ChevronDown />
+        </button>
+      </div>
+    </article>
+  );
+};
+
+export default CartItem;
+```
+
+cartItems.js è un array di oggetti, useremo questo per riempire il carrello.
+
+### Primi riduttori (First Reducer)
+
+- cartSlice.js
+- Immer library
+
+```js
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    clearCart: (state) => {
+      state.cartItems = [];
+    },
+  },
+});
+
+export const { clearCart } = cartSlice.actions;
+```
+
+- create action
+
+```js
+const ACTION_TYPE = 'ACTION_TYPE';
+
+const actionCreator = (payload) => {
+  return { type: ACTION_TYPE, payload: payload };
+};
+```
+
+- CartContainer.js
+
+```js
+import React from 'react';
+import CartItem from './CartItem';
+import { useDispatch, useSelector } from 'react-redux';
+
+const CartContainer = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <button
+      className='btn clear-btn'
+      onClick={() => {
+        dispatch(clearCart());
+      }}
+    >
+      clear cart
+    </button>
+  );
+};
+
+export default CartContainer;
+```
