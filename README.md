@@ -325,7 +325,7 @@ const CartContainer = () => {
 export default CartContainer;
 ```
 
-La funzione "clearCar" inserita in cartSlice.js nella proprietà reducers viene considerata una "actions".
+La funzione "clearCart" inserita in cartSlice.js nella proprietà reducers viene considerata una "actions".
 
 Tutto quello che viene ritornato dal reducer diventa il nuovo valore dello State.
 
