@@ -105,3 +105,54 @@ export const store = configureStore({
   },
 });
 ```
+### Redux DevTools
+
+- extension per Chrome, si accede dagli strumenti per gli sviluppatori. Da qui è possibile vedere gli state che abbiamo nel file "cartSlice.js".
+Qualunque cambiamento possiamo vederlo da qui.
+
+### Accedere ai dati nello Store
+
+Vediamo come accedere all'initial state da ogni componente.
+
+- create components/Navbar.js
+
+```js
+import { CartIcon } from '../icons';
+import { useSelector } from 'react-redux';
+
+const Navbar = () => {
+  const { amount } = useSelector((state) => state.cart);
+
+  return (
+    <nav>
+      <div className='nav-center'>
+        <h3>redux toolkit</h3>
+        <div className='nav-container'>
+          <CartIcon />
+          <div className='amount-container'>
+            <p className='total-amount'>{amount}</p>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+export default Navbar;
+```
+In questo codice stiamo accedendo alla proprietà "amount" in cartSlice dalla nostra navbar.
+
+"useSelector" ci permette di accedere all'intero state della nostra applicazione
+
+Possiamo chiamare il parametro (state) dopo "useSelector" come vogliamo. 
+
+### Hero Icons
+
+Per questo progetto sono state usate le [Hero Icons](https://heroicons.com/)
+
+```css
+nav svg {
+  width: 40px;
+  color: var(--clr-white);
+}
+```
+
