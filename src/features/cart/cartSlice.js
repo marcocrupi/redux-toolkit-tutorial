@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import cartItems from "../../cartItems"
+import cartItems from "../../cartItems";
 
 const initialState = {
   // Si riferisce all'array di oggetti importato
@@ -14,11 +14,15 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     clearCart: (state) => {
-      state.cartItems = [];
-    }
-  }
+      // In questa funzione vogliamo che a cartItems
+      // venga assegnato un array vuoto
+       state.cartItems = [];
+      // Vediamo un metodo alternativo:
+      // return { cartItems: [] };
+    },
+  },
 });
 
-// console.log(cartSlice);
+export const { clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
