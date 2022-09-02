@@ -7,6 +7,7 @@ import Modal from "./components/Modal";
 
 function App() {
   const { cartItems } = useSelector((state) => state.cart);
+   const { isOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
   // useEffect dipende da cartItems, useSelector prende cartItems da cart
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <main>
-      <Modal />
+     {isOpen && < Modal />}
       <Navbar />
       <CartContainer />
     </main>
