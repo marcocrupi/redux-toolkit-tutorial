@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 // lo state in questo file.
 import "./features/cart/cartSlice";
 
-// Serve a imparare cartSlice.reducer
+// Serve a importare cartSlice.reducer
 import cartReducer from "./features/cart/cartSlice";
 
 export const store = configureStore({

@@ -12,6 +12,9 @@ const CartItem = ({ id, img, title, price, amount }) => {
         <h4 className="item-price">${price}</h4>
         <button
           className="remove-btn"
+          // Per rimuovere un item specifico passiamo il suo id
+          // specifico alla funzione removeItem
+          // "removeItem" è l'action e "id" è il payload
           onClick={() => {
             dispatch(removeItem(id));
           }}

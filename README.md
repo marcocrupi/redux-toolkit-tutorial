@@ -400,10 +400,10 @@ const CartItem = ({ id, img, title, price, amount }) => {
       <div>
         <h4>{title}</h4>
         <h4 className='item-price'>${price}</h4>
-        {/* remove button */}
         <button
           className='remove-btn'
           onClick={() => {
+            // "removeItem" è l'action e "id" è il payload
             dispatch(removeItem(id));
           }}
         >
@@ -468,4 +468,47 @@ function App() {
 }
 
 export default App;
+```
+
+Payload è una convenzione di denominazione non ufficiale (de facto) accettata dalla comunità per la proprietà che contiene i dati effettivi in un oggetto "action" Redux.
+
+L'action "calculateTotals" la porteremo in App.js. 
+
+Ogni volta che ci sarà un cambiamento in cartItems verrà "inviato" (dispatch) / eseguito calculateTotals().
+
+### Modal
+
+- create components/Modal.js
+
+```js
+const Modal = () => {
+  return (
+    <aside className='modal-container'>
+      <div className='modal'>
+        <h4>Remove all items from your shopping cart?</h4>
+        <div className='btn-container'>
+          <button type='button' className='btn confirm-btn'>
+            confirm
+          </button>
+          <button type='button' className='btn clear-btn'>
+            cancel
+          </button>
+        </div>
+      </div>
+    </aside>
+  );
+};
+export default Modal;
+```
+
+- App.js
+
+```js
+return (
+  <main>
+    <Modal />
+    <Navbar />
+    <CartContainer />
+  </main>
+);
 ```
