@@ -480,6 +480,8 @@ Ogni volta che ci sarà un cambiamento in cartItems verrà "inviato" (dispatch) 
 
 - create components/Modal.js
 
+È un "alert" di conferma se procedere oppure no.
+
 ```js
 const Modal = () => {
   return (
