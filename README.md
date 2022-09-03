@@ -619,7 +619,9 @@ const Modal = () => {
 export default Modal;
 ```
 
-### async functionality with createAsyncThunk
+### Async functionality with createAsyncThunk
+
+Per usare una API che ha gli stessi elementi contenuti in cartItems.js abbiamo bisogno di usare la libreria "createAsyncThunk".
 
 - [Course API](https://course-api.com/)
 - https://course-api.com/react-useReducer-cart-project
@@ -634,15 +636,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const url = 'https://course-api.com/react-useReducer-cart-project';
 
+// Quando invochiamo "createAsyncThunk" servono due cose: 'cart/getCartItems' è il tipo di azione, mentre il secondo elemento è una
+// funzione di callback, da questa funzione abbiamo di ritorno una promise   
 export const getCartItems = createAsyncThunk('cart/getCartItems', () => {
   return fetch(url)
     .then((resp) => resp.json())
     .catch((err) => console.log(error));
 });
 
+// Quando lavoriamo con le promise abbiamo poche opzioni
+// Le promise possono essere "pending", "fulfilled" e "rejected" 
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
+  // Settiamo un "extraReducers" per accedere alle lifycycle action 
   extraReducers: {
     [getCartItems.pending]: (state) => {
       state.isLoading = true;
@@ -689,4 +697,31 @@ function App() {
 }
 
 export default App;
+```
+
+### Options
+
+```sh
+npm install axios
+```
+
+- cartSlice.js
+
+```js
+export const getCartItems = createAsyncThunk(
+  'cart/getCartItems',
+  async (name, thunkAPI) => {
+    try {
+      // console.log(name);
+      // console.log(thunkAPI);
+      // console.log(thunkAPI.getState());
+      // thunkAPI.dispatch(openModal());
+      const resp = await axios(url);
+
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('something went wrong');
+    }
+  }
+);
 ```
