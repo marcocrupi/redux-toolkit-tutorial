@@ -701,6 +701,8 @@ export default App;
 
 ### Options
 
+Questo è un setup più complesso del precedente che richiede l'installazione di una libreria denominata "axios".
+
 ```sh
 npm install axios
 ```
